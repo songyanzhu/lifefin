@@ -2,19 +2,22 @@
 lifefin.calculators: 基础金融计算器模块
 """
 
-def mortgage_calculator(principal, annual_rate, years, payment_type="equal_payment"):
+def mortgage_calculator(principal, annual_rate, years, payment_type="equal_payment", verbose=True):
     """
     房贷计算器
     :param principal: 贷款本金 (元)
-    :param annual_rate: 年利率 (例如 0.045 代表 4.5%)
+    :param annual_rate: 年利率百分比 (如 4.5 代表 4.5%)
     :param years: 贷款年限
     :param payment_type: 'equal_payment' (等额本息) 或 'equal_principal' (等额本金)
     """
-    monthly_rate = annual_rate / 12
+    if verbose:
+        print(f"[房贷计算输入] 本金: {principal}元 | 年利率: {annual_rate}% | 期限: {years}年 | 还款方式: {payment_type}")
+
+    decimal_rate = annual_rate / 100
+    monthly_rate = decimal_rate / 12
     months = years * 12
 
     if payment_type == "equal_payment":
-        # 等额本息每月还款额公式
         monthly_payment = principal * monthly_rate * ((1 + monthly_rate) ** months) / (((1 + monthly_rate) ** months) - 1)
         total_payment = monthly_payment * months
         total_interest = total_payment - principal
@@ -24,7 +27,6 @@ def mortgage_calculator(principal, annual_rate, years, payment_type="equal_payme
             "total_interest": round(total_interest, 2)
         }
     elif payment_type == "equal_principal":
-        # 等额本金
         monthly_principal = principal / months
         payments = []
         total_interest = 0
@@ -42,12 +44,16 @@ def mortgage_calculator(principal, annual_rate, years, payment_type="equal_payme
     else:
         raise ValueError("payment_type 必须是 'equal_payment' 或 'equal_principal'")
 
-def savings_interest(principal, annual_rate, years, compound_frequency=1):
+def savings_interest(principal, annual_rate, years, compound_frequency=1, verbose=True):
     """
     存款利息计算 (支持复利)
-    :param compound_frequency: 每年复利次数，1为年复利，12为月复利
+    :param annual_rate: 年利率百分比 (如 3 代表 3%)
     """
-    amount = principal * (1 + annual_rate / compound_frequency) ** (compound_frequency * years)
+    if verbose:
+        print(f"[存款利息输入] 本金: {principal}元 | 年利率: {annual_rate}% | 期限: {years}年 | 每复利频率: {compound_frequency}次/年")
+
+    decimal_rate = annual_rate / 100
+    amount = principal * (1 + decimal_rate / compound_frequency) ** (compound_frequency * years)
     interest = amount - principal
     return {
         "final_amount": round(amount, 2),
