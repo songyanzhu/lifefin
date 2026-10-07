@@ -8,7 +8,6 @@ def get_housing_data(country="CN", region="Beijing"):
     获取中英两国历史房价数据
     """
     print(f"正在获取 {country} 地区 {region} 的历史房价数据...")
-    # 示例模拟数据，后续可通过爬虫或外部 API 丰富
     data = {
         "Year": [2018, 2019, 2020, 2021, 2022, 2023],
         "AvgPrice_per_sqm": [55000, 58000, 60000, 63000, 62000, 60000] if country == "CN" else [3000, 3200, 3400, 3700, 3900, 3800]
@@ -28,7 +27,7 @@ def get_inflation_data(country="CN"):
 
 def get_stock_data(ticker="AAPL"):
     """
-    使用 yfinance 等第三方包获取上市公司历史股价
+    使用 yfinance 获取上市公司历史股价
     """
     try:
         import yfinance as yf
@@ -36,7 +35,7 @@ def get_stock_data(ticker="AAPL"):
         df = yf.download(ticker, period="1y")
         return df
     except ImportError:
-        print("提示: 未安装 yfinance 包，返回模拟历史数据。您可以通过 pip install yfinance 安装。")
+        print("提示: 未安装 yfinance 包，返回模拟历史数据。")
         data = {
             "Date": ["2023-12-01", "2023-12-02", "2023-12-03"],
             "Close": [185.2, 186.4, 189.1]
