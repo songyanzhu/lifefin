@@ -1,0 +1,9 @@
+lifefin_project/          # 你的本地开发根目录（名字随意）
+├── pyproject.toml        # 核心打包配置文件
+├── README.md             # 项目说明文档（会显示在 PyPI 主页上）
+├── LICENSE               # 开源协议文件（如 MIT）
+└── lifefin/              # 实际的包源码目录（若名字被占用可改为 lifefin_ukcn 等）
+    ├── __init__.py       # 暴露核心接口
+    ├── calculators.py
+    ├── tradeoff.py
+    └── data_fetcher.py
